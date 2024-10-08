@@ -1,14 +1,14 @@
 import os
 import time
 
-# Fungsi untuk membersihkan layar
+# Fungsi untuk reset terminal
 def clear_screen():
     if os.name == 'nt':  # Untuk Windows
         os.system('cls')
     else:  # Untuk Mac/Linux
         os.system('clear')
 
-# Class Rule tetap
+# Class Rule untuk menyimpan antacedent dan consequent 
 class Rule:
     def __init__(self, antecedent, consequent):
         self.antecedent = antecedent
@@ -20,7 +20,7 @@ class Rule:
     def get_consequent(self):
         return self.consequent
 
-# Class UI yang menampilkan pertanyaan berdasarkan kelompok gejala
+# Class UI yang menampilkan pertanyaan dan penyakit yang diidentifikasi berdasarkan kelompok gejala
 class UI:
     def __init__(self):
         # Kelompok penyakit dan gejalanya
@@ -80,12 +80,10 @@ class UI:
 
             while True:
                 try:
-                    # Pisahkan input berdasarkan spasi dan konversi ke integer
                     selected_symptoms = list(map(int, user_input.split()))
 
-                    # Validasi bahwa semua input ada dalam rentang yang sesuai
                     if all(num in range(len(symptoms) + 1) for num in selected_symptoms):  
-                        break  # Keluar dari loop jika input valid
+                        break
                     else:
                         print("Input tidak sesuai. Mohon masukkan nomor yang valid.")
                 except ValueError:
@@ -129,7 +127,7 @@ class UI:
         else:
             print('Tanaman anda tidak teridentifikasi penyakit apapun')
 
-# Class ForwardChaining tetap
+# Class ForwardChaining untuk proses pengecekan fakta
 class ForwardChaining:
     @staticmethod
     def do_forward_chaining(rules, facts):
@@ -146,7 +144,7 @@ class ForwardChaining:
                 break
         return inferred_facts
 
-# Fungsi untuk membaca basis pengetahuan
+# Fungsi untuk membaca knowledge base
 def get_knowledge():
     file_path = "knowledge_base.txt"
     rules = []
@@ -160,7 +158,7 @@ def get_knowledge():
                 rules.append(Rule(antecedent, consequent))
     return rules
 
-# Eksekusi program
+# Eksekusi program utama
 tampilan = UI()
 tampilan.show_symptoms()
 
